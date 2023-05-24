@@ -47,12 +47,14 @@ function CounterImmer() {
     setCount(count + 1);
   };
   const decrement = () => {
-    setCount((count) => {
-      return (count = count - 1);
+    setCount(count - 1); // 依然有效
+    // setCount(--count); // error
+    setCount((c) => (c = c - 1)); // ok
+    setCount((c) => --c); // ok
+    setCount((c) => {
+      return (c = c - 1); // wordy
     });
-    setCount((count) => (count = count - 1)); // ok
-    setCount((count) => --count); // ok
-    setCount((count) => count--); // not work
+    setCount((c) => c--); // not work
   };
 
   return (
