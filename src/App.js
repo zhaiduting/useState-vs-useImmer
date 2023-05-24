@@ -21,8 +21,7 @@ export default function Counter() {
   );
 }
 
-// 虽然 useImmerReducer 的确好用
-// 但是 useImmer 却比 useState 麻烦
+// 使用 useImmer 替代 useState
 
 import { useImmer } from "use-immer";
 
@@ -33,6 +32,7 @@ function CounterImmer() {
     updatePerson({ ...person, age: person.age + 0.1 });
 
     // 通常的用法是传递一个函数，这在处理嵌套对象的更新时非常方便
+    // 详见 https://react.dev/learn/updating-objects-in-state#updating-a-nested-object
     updatePerson((draft) => {
       return { ...draft, age: draft.age + 1 };
     });
