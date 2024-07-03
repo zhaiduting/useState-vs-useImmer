@@ -12,7 +12,7 @@ export default function Counter() {
   return (
     <>
       <div>
-        <p>Count: {count}</p>
+        <p>Count by useState: {count}</p>
         <button onClick={increment}>Increment</button>
       </div>
       <hr />
@@ -34,10 +34,11 @@ function CounterImmer() {
     // 通常的用法是传递一个函数，这在处理嵌套对象的更新时非常方便
     // 详见 https://react.dev/learn/updating-objects-in-state#updating-a-nested-object
     updatePerson((draft) => {
-      return { ...draft, age: draft.age + 1 };
+      return { ...draft, age: draft.age + 1 }; // 这也是类似于 useState 的写法，更烦冗，还不如上面的简洁
     });
-    updatePerson((person) => {
-      person.age = person.age.toFixed(1) / 1; // 保留1位小数
+    updatePerson((draft) => {
+      // 这才是 useImmer 的推荐写法
+      draft.age = draft.age.toFixed(1) / 1; // 保留1位小数
     });
   }
 
@@ -50,19 +51,19 @@ function CounterImmer() {
     setCount(count - 1); // 依然有效
     // setCount(--count); // error
     setCount((c) => (c = c - 1)); // ok
-    setCount((c) => --c); // ok
     setCount((c) => {
       return (c = c - 1); // wordy
     });
     setCount((c) => c--); // not work
+    setCount((c) => --c); // ok
   };
 
   return (
     <>
       <div>
-        <p>Count: {count}</p>
+        <p>Count by useImmer: {count}</p>
         <button onClick={increment}>Increment as useState()</button>{" "}
-        <button onClick={decrement}>decrement</button>
+        <button onClick={decrement}>decrement 2</button>
         <p>
           {person.name} is {person.age} years old.
         </p>
